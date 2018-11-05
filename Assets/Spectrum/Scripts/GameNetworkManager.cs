@@ -31,6 +31,7 @@ namespace Spectrum
 
 		public void ConnectToMasterAsClient()
 		{
+			Spectrum.LogLevel = Spectrum.SpectrumLogLevel.Information;
 			string path = Application.streamingAssetsPath+"/"+clientConnectioninfoFileName;
 			Debug.Log("path: " + path);
 			if (File.Exists(path))

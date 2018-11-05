@@ -24,6 +24,7 @@ namespace Spectrum
 			MasterPort = ExtractValueInt(Names.MasterPort, 5000);
 			MasterIp = ExtractValue(Names.MasterIp);
 			MachineIp = ExtractValue(Names.MachineIp);
+			AssignedPort = ExtractValueInt(Names.AssignedPort);
 		}
 
 		#region Arguments
