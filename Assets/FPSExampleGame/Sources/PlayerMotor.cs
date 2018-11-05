@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace ExampleGame
+namespace SpectrumFPSExampleGame
 {
 	[RequireComponent(typeof(Rigidbody))]
 	public class PlayerMotor : MonoBehaviour
@@ -13,7 +13,6 @@ namespace ExampleGame
 		private Vector3 Rotation = Vector3.zero;
 		private float CameraRotationX = 0f;
 		private float CurrentCameraRotationX = 0f;
-		//private Vector3 ThrusterForce = Vector3.zero;
 
 		[SerializeField]
 		private float CameraRotationLimit = 85f;
@@ -46,10 +45,6 @@ namespace ExampleGame
 			{
 				Rb.MovePosition(Rb.position + Velocity * Time.fixedDeltaTime);
 			}
-			//if (ThrusterForce != Vector3.zero)
-			//{
-			//	Rb.AddForce(ThrusterForce * Time.deltaTime, ForceMode.Acceleration);
-			//}
 		}
 
 		private void PerformRotation()
@@ -83,10 +78,5 @@ namespace ExampleGame
 			Rb.AddRelativeForce(Direction * DashForce, ForceMode.Impulse);
 		}
 
-		//// get a force vector for our thrutsers
-		//public void ApplyThrust(Vector3 _ThrusterForce)
-		//{
-		//	ThrusterForce = _ThrusterForce;
-		//}
 	}
 }

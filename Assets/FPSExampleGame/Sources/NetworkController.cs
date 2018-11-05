@@ -2,7 +2,7 @@
 using UnityEngine.Events;
 using Mirror;
 
-namespace ExampleGame.Sources
+namespace SpectrumFPSExampleGame.Sources
 {
 	public class NetworkController : NetworkManager
 	{

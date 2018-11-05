@@ -100,6 +100,7 @@ namespace Spectrum
 				ClientScene.Ready(conn);
 				if (autoCreatePlayer)
 				{
+					Spectrum.LogInformation("Adding player");
 					ClientScene.AddPlayer();
 				}
 			}

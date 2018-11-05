@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace ExampleGame.Sources
+namespace SpectrumFPSExampleGame.Sources
 {
 	public class UIController : MonoBehaviour
 	{

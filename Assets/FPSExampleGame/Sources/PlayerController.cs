@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 
-namespace ExampleGame.Sources
+namespace SpectrumFPSExampleGame.Sources
 {
-	//[RequireComponent(typeof(Animator))]
 	[RequireComponent(typeof(PlayerMotor))]
 	public class PlayerController : MonoBehaviour
 	{
@@ -16,35 +15,11 @@ namespace ExampleGame.Sources
 		[SerializeField]
 		private float YLookSensisitivity = 3.0f;
 
-		//[SerializeField]
-		//private float ThrusterForce = 1000f;
-
-		//[SerializeField]
-		//private float ThrusterFuelBurnSpeed = 1f;
-
-		//[SerializeField]
-		//private float ThrusterFuelRegenSpeed = 0.3f;
-
-		//private float ThrusterFuelAmount = 1f;
-
-		//public float GetThrusterFuelAmount()
-		//{
-		//	return ThrusterFuelAmount;
-		//}
-
 		[SerializeField]
 		LayerMask EnvironmentMask;
 
-		[Header("Spring Settings")]
-		[SerializeField]
-		private float JointSpring;
-		[SerializeField]
-		private float JointMaxForce = 40f;
-
 		// component caching
 		private PlayerMotor Motor;
-		private ConfigurableJoint Joint;
-		//private Animator animator;
 
 		private float XMovementBuffer;
 		private float ZMovementBuffer;
@@ -61,7 +36,6 @@ namespace ExampleGame.Sources
 		void Start()
 		{
 			Motor = GetComponent<PlayerMotor>();
-			Joint = GetComponent<ConfigurableJoint>();
 		}
 
 		private void Awake()
@@ -90,18 +64,6 @@ namespace ExampleGame.Sources
 				}
 			}
 
-			// setting target position for spring
-			// (works better with flying over objects)
-			RaycastHit _hit;
-			if(Physics.Raycast(transform.position, Vector3.down, out _hit, 100f, EnvironmentMask))
-			{
-				//Joint.targetPosition = new Vector3(0f, -_hit.point.y, 0f);
-			}
-			else
-			{
-				//Joint.targetPosition = new Vector3(0f, 0f, 0f);
-			}
-
 			XMovementBuffer = Input.GetAxis("Horizontal");
 			ZMovementBuffer = Input.GetAxis("Vertical");
 
@@ -109,8 +71,6 @@ namespace ExampleGame.Sources
 			MovementVertical = transform.forward * ZMovementBuffer;
 
 			Velocity = (MovementHorizontal + MovementVertical) * Speed;
-
-			//animator.SetFloat("ForwardVelocity", ZMovementBuffer);
 
 			Motor.Move(Velocity);
 
@@ -143,50 +103,6 @@ namespace ExampleGame.Sources
 			{
 				Cursor.lockState = CursorLockMode.None;
 			}
-
-			//if (Input.GetButtonDown("Dash"))
-			//{
-			//	if (Input.GetKey(KeyCode.A))
-			//	{
-			//		Motor.Dash(Vector3.left);
-			//	}
-			//	else if (Input.GetKey(KeyCode.S))
-			//	{
-			//		Motor.Dash(Vector3.back);
-			//	}
-			//	else if (Input.GetKey(KeyCode.D))
-			//	{
-			//		Motor.Dash(Vector3.right);
-			//	}
-			//	else
-			//	{
-			//		Motor.Dash(Vector3.forward);
-			//	}
-			//}
-
-			//// apply thruster force
-			//if (Input.GetButton("Jump") && ThrusterFuelAmount > 0f)
-			//{
-			//	ThrusterFuelAmount -= ThrusterFuelBurnSpeed * Time.fixedDeltaTime;
-			//	if (ThrusterFuelAmount >= 0.01f)
-			//	{
-			//		_ThrusterForce = Vector3.up * ThrusterForce;
-			//		SetJointSettings(0f);
-			//	}
-			//}
-			//else
-			//{
-			//	ThrusterFuelAmount += ThrusterFuelRegenSpeed * Time.fixedDeltaTime;
-			//	SetJointSettings(JointSpring);
-			//}
-			//ThrusterFuelAmount = Mathf.Clamp(ThrusterFuelAmount, 0f, 1f);
-			//Motor.ApplyThrust(_ThrusterForce);
-			//SetJointSettings(JointSpring);
-
-			//if (Input.GetButtonDown("Use"))
-			//{
-			//	GameManager.instance.CmdTryUseCurrentObject(gameObject.name);
-			//}
 		}
 
 	}

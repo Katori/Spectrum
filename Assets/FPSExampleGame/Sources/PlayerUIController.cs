@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace ExampleGame
+namespace SpectrumFPSExampleGame
 {
 	internal class PlayerUIController : MonoBehaviour
 	{

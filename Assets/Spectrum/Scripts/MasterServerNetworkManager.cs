@@ -50,13 +50,14 @@ namespace Spectrum
 
 		public override void OnServerAddPlayer(NetworkConnection conn)
 		{
-
+			Spectrum.LogInformation("Master Server - Setting client ready of connectionId:" + conn.connectionId);
+			NetworkServer.SetClientReady(conn);
 		}
 
 		public override void OnStartServer()
 		{
 			base.OnStartServer();
-			Debug.Log("Registering handlers");
+			Debug.Log("Master Server - Registering handlers");
 			NetworkServer.RegisterHandler(Spectrum.MsgTypes.AddSpawnerToList, OnSpawnerReady);
 			NetworkServer.RegisterHandler(Spectrum.MsgTypes.AddGameServerToList, OnGameServerReady);
 			NetworkServer.RegisterHandler(Spectrum.MsgTypes.SendGameServerIPToClient, SendGameServerIPToClient);
