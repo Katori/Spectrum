@@ -1,3 +1,7 @@
+# Notice: What is Spectrum Today?
+
+Below is an aspirational target for Spectrum 0.1. Currently Spectrum 0.1 is in development. Look (and use) at your own risk.
+
 # Spectrum
 
 ## What Is Spectrum
