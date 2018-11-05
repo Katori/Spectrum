@@ -1,0 +1,10 @@
+{
+    "name": "FPSExampleGameSources",
+    "references": [
+        "Spectrum"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false
+}
