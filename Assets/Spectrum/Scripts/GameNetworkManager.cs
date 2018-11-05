@@ -10,10 +10,6 @@ namespace Spectrum
 
 		public static GameNetworkManager Instance { get; private set; }
 
-		private readonly string clientConnectioninfoFileName = "ClientConnectionInfo.json";
-
-		private bool DoLoadGameScene = false;
-
 		public bool UseSpawnCamera;
 		public string SpawnCameraName = "SpawnCamera";
 
