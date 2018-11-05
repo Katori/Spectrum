@@ -15,6 +15,8 @@ namespace Spectrum
 		public static List<string> SpawnerServerIPs;
 		public static SpectrumLogLevel LogLevel = SpectrumLogLevel.None;
 
+		public static readonly string SpectrumConnectionInfoFileName = "SpectrumConnectionInfo.json";
+
 
 		static Spectrum()
 		{
@@ -57,5 +59,14 @@ namespace Spectrum
 				Debug.Log("Spectrum Info - " + c.ToShortDateString() + "@" + c.ToShortTimeString() + ": " + Info);
 			}
 		}
+
+
+	}
+
+	[System.Serializable]
+	public class SpectrumConnectionInfo
+	{
+		public string MasterServerIP;
+		public int MasterServerPort;
 	}
 }

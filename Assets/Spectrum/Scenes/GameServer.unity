@@ -158,7 +158,9 @@ MonoBehaviour:
   m_UseWebSockets: 0
   isNetworkActive: 0
   UseSpawnCamera: 1
-  SpawnCamera: {fileID: 0}
+  SpawnCameraName: SpawnCamera
+  AutoStartServer: 1
+  Connect: {fileID: 0}
 --- !u!4 &459652250
 Transform:
   m_ObjectHideFlags: 0
@@ -199,10 +201,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fe8e22c83cbfa2449170bc18e83673b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AutomaticallyConnectToMasterServer: 1
+  AutoMasterIP: 10.1.10.65
+  AutoMasterPort: 7777
+  HostPortOverride: 7778
   GameNetworkManager: {fileID: 459652249}
   AutoStartServer: 1
-  AutoStartMasterIP: 10.1.10.65
-  AutoStartMasterPort: 7777
 --- !u!4 &1273550720
 Transform:
   m_ObjectHideFlags: 0
