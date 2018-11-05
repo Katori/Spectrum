@@ -53,8 +53,18 @@ namespace Spectrum
 
 		public void OpenGameServer()
 		{
-			networkAddress = Spectrum.MachineIP;
-			serverBindAddress = Spectrum.MachineIP;
+			if (GameServerConnectionToMasterBehaviour.Instance.AutoStartServer)
+			{
+				Spectrum.LogInformation("Using Auto Server (Inspector Configured)");
+				networkAddress = GameServerConnectionToMasterBehaviour.Instance.AutoStartMasterIP;
+				serverBindAddress = GameServerConnectionToMasterBehaviour.Instance.AutoStartMasterIP;
+			}
+			else
+			{
+				networkAddress = Spectrum.MachineIP;
+				serverBindAddress = Spectrum.MachineIP;
+			}
+			
 			if (Spectrum.Args.StartGameServer)
 			{
 				networkPort = Spectrum.Args.AssignedPort;
