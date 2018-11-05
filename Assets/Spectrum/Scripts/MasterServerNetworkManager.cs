@@ -48,6 +48,12 @@ namespace Spectrum
 			}
 		}
 
+		public override void OnServerConnect(NetworkConnection conn)
+		{
+			base.OnServerConnect(conn);
+			NetworkServer.SetClientReady(conn);
+		}
+
 		public override void OnServerAddPlayer(NetworkConnection conn)
 		{
 			Spectrum.LogInformation("Master Server - Setting client ready of connectionId:" + conn.connectionId);

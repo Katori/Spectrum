@@ -79,12 +79,6 @@ namespace Spectrum
 			Transport.layer.Shutdown();
 		}
 
-		//private void StartServerOnPort(NetworkMessage netMsg)
-		//{
-		//	var c = netMsg.ReadMessage<IntegerMessage>();
-		//	GameNetworkManager.OpenGameServer(c.value);
-		//}
-
 		public void GameServerAvailable()
 		{
 			var c = new IntegerMessage(GameNetworkManager.networkPort);
