@@ -15,9 +15,6 @@ namespace SpectrumFPSExampleGame.Sources
 		[SerializeField]
 		private float YLookSensisitivity = 3.0f;
 
-		[SerializeField]
-		LayerMask EnvironmentMask;
-
 		// component caching
 		private PlayerMotor Motor;
 

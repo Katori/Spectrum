@@ -146,7 +146,7 @@ MonoBehaviour:
   m_NetworkAddress: localhost
   m_DontDestroyOnLoad: 1
   m_RunInBackground: 1
-  m_ShowDebugMessages: 1
+  m_ShowDebugMessages: 0
   m_PlayerPrefab: {fileID: 1842768837737316, guid: 47416ef4e5874ed4b8e55cedb4283a96,
     type: 2}
   m_AutoCreatePlayer: 1
