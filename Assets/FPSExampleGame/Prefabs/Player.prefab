@@ -60,6 +60,7 @@ GameObject:
   - component: {fileID: 114991114084175354}
   - component: {fileID: 114250535003848680}
   - component: {fileID: 114780945071676162}
+  - component: {fileID: 114190254019075338}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -298,6 +299,22 @@ AudioListener:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1703575236840412}
   m_Enabled: 1
+--- !u!114 &114190254019075338
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1842768837737316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a551087ea6d439439a9fa8347e8e60a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ComponentsToDisableOnRemote:
+  - {fileID: 114991114084175354}
+  - {fileID: 114203629211118778}
+  - {fileID: 20848168957301964}
+  - {fileID: 81766911930602466}
 --- !u!114 &114203629211118778
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -365,8 +382,6 @@ MonoBehaviour:
   EnvironmentMask:
     serializedVersion: 2
     m_Bits: 0
-  JointSpring: 20
-  JointMaxForce: 40
   JumpForce: {x: 0, y: 10, z: 1}
 --- !u!124 &124370146094463796
 Behaviour:

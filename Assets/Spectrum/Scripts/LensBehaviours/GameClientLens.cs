@@ -34,7 +34,7 @@ namespace Spectrum
 		public override void OnConnected()
 		{
 			base.OnConnected();
-			Spectrum.LogInformation("Connected to master received by GameClientNetMan2");
+			Spectrum.LogInformation("Connected to master received by GameClientLens");
 			ClientSendMsg(Spectrum.MsgTypes.SendGameServerIPToClient, new EmptyMessage());
 		}
 
