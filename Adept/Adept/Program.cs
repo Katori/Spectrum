@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Threading;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore.Internal;
@@ -14,35 +12,45 @@ namespace Adept
     public class Program
     {
 		public static Dictionary<int, GameServerInfo> GameServers = new Dictionary<int, GameServerInfo>();
+		private static readonly int serverFrequency = 60;
 
 		public static void Main(string[] args)
         {
 			//CreateWebHostBuilder(args).Build().Run();
 			var servercontainer = new ServerContainer();
 			Transport.layer = new TelepathyTransport();
-			Transport.layer.ServerStart("10.1.10.65", 7654, 20);
+			
 			RegisterHandlers();
-			while (true)
+			Thread serverThread = new Thread(() =>
 			{
-				while (Transport.layer.ServerGetNextMessage(out int connectionId, out TransportEvent transportEvent, out byte[] data))
+
+				Transport.layer.ServerStart("10.1.10.65", 7654, 20);
+				while (true)
 				{
-					switch (transportEvent)
+					while (Transport.layer.ServerGetNextMessage(out int connectionId, out TransportEvent transportEvent, out byte[] data))
 					{
-						case TransportEvent.Connected:
-							//Debug.Log("NetworkServer loop: Connected");
-							servercontainer.HandleConnect(connectionId, 0);
-							break;
-						case TransportEvent.Data:
-							//Debug.Log("NetworkServer loop: clientId: " + message.connectionId + " Data: " + BitConverter.ToString(message.data));
-							servercontainer.HandleData(connectionId, data, 0);
-							break;
-						case TransportEvent.Disconnected:
-							//Debug.Log("NetworkServer loop: Disconnected");
-							servercontainer.HandleDisconnect(connectionId, 0);
-							break;
+						switch (transportEvent)
+						{
+							case TransportEvent.Connected:
+								//Debug.Log("NetworkServer loop: Connected");
+								servercontainer.HandleConnect(connectionId, 0);
+								break;
+							case TransportEvent.Data:
+								//Debug.Log("NetworkServer loop: clientId: " + message.connectionId + " Data: " + BitConverter.ToString(message.data));
+								servercontainer.HandleData(connectionId, data, 0);
+								break;
+							case TransportEvent.Disconnected:
+								//Debug.Log("NetworkServer loop: Disconnected");
+								servercontainer.HandleDisconnect(connectionId, 0);
+								break;
+						}
 					}
+					Thread.Sleep(1000 / serverFrequency);
 				}
-			}
+			});
+			serverThread.IsBackground = false;
+			serverThread.Start();
+			
 			
 		}
 
@@ -73,7 +81,7 @@ namespace Adept
 		{
 			var AvailableGameServers = GameServers.Where(x => x.Value.JoinedPlayers < x.Value.Capacity);
 			var AvailableGameServersAsList = AvailableGameServers.ToList();
-			var r = new Random((int)System.DateTime.Now.Ticks);
+			var r = new System.Random((int)System.DateTime.Now.Ticks);
 			if (AvailableGameServersAsList.Any())
 			{
 				var RandomAvailableGameServer = AvailableGameServersAsList[r.Next(0, AvailableGameServersAsList.Count)];
