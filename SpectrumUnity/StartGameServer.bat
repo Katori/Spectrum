@@ -1,0 +1,1 @@
+".\Builds\GameServer\GameServer.exe" -batchmode -nographics -SpectrumGameServer -SpectrumMasterIp 10.1.10.65 -SpectrumMasterPort 7777 -SpectrumAssignedPort 7778 -SpectrumMachineIp 10.1.10.65

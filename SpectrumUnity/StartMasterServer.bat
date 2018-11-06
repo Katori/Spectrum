@@ -1,0 +1,1 @@
+".\Builds\Master\MasterServer.exe" -batchmode -nographics -SpectrumMaster -SpectrumMasterIp 10.1.10.65 -SpectrumMasterPort 7777

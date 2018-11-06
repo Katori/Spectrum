@@ -1,0 +1,1 @@
+".\Builds\Spawner\SpawnerServer.exe" -batchmode -nographics -SpectrumSpawner -SpectrumMasterIp 10.1.10.65 -SpectrumMasterPort 7777
