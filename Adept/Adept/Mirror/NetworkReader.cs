@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace TelepathyServerTest
+namespace Adept
 {
 	public class NetworkReader
 	{

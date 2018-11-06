@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TelepathyServerTest
+namespace Adept
 {
 	// Handles network messages on client and server
 	public delegate void NetworkMessageDelegate(NetworkMessage netMsg);

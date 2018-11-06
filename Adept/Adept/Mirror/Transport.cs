@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace TelepathyServerTest
+namespace Adept
 {
 	// Transport class used by HLAPI ///////////////////////////////////////////
 	public static class Transport

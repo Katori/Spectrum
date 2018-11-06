@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace TelepathyServerTest
+namespace Adept
 {
 	/*
     * wire protocol is a list of :   size   |  msgType     | payload

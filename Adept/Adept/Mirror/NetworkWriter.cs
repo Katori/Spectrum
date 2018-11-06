@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace TelepathyServerTest
+namespace Adept
 {
 	// Binary stream Writer. Supports simple types, buffers, arrays, structs, and nested types
 	public class NetworkWriter

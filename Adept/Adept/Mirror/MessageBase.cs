@@ -1,4 +1,4 @@
-﻿namespace TelepathyServerTest
+﻿namespace Adept
 {
 	// This can't be an interface because users don't need to implement the
 	// serialization functions, we'll code generate it for them when they omit it.

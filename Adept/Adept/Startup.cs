@@ -11,7 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Telepathy;
 
-namespace TelepathyServerTest
+namespace Adept
 {
     public class Startup
     {

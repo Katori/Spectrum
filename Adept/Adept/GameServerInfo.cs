@@ -1,4 +1,4 @@
-﻿namespace TelepathyServerTest
+﻿namespace Adept
 {
 	[System.Serializable]
 	public class GameServerInfo

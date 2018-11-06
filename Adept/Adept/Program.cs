@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore.Internal;
+using static Spectrum.Adept.Spectrum;
 
-namespace TelepathyServerTest
+namespace Adept
 {
     public class Program
     {
@@ -47,8 +48,8 @@ namespace TelepathyServerTest
 
 		private static void RegisterHandlers()
 		{
-			ServerContainer.RegisterHandler(5010, SendGameServerToClient);
-			ServerContainer.RegisterHandler(5005, NewGameServerActive);
+			ServerContainer.RegisterHandler((short)MsgTypes.SendGameServerIPToClient, SendGameServerToClient);
+			ServerContainer.RegisterHandler((short)MsgTypes.AddGameServerToList, NewGameServerActive);
 			ServerContainer.RegisterHandler((short)MsgType.Disconnect, ConnectionDisconnected);
 		}
 
