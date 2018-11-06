@@ -1,6 +1,6 @@
 ﻿namespace Spectrum
 {
-	public class GameServerNetMan2 : NetMan2
+	public class GameServerLens : LensBehaviour
 	{
 		public GameNetworkManager GameNetMan;
 

@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Spectrum
 {
-	class GameClientNetMan2 : NetMan2
+	class GameClientLens : LensBehaviour
 	{
 
 		public GameNetworkManager GameNetMan;

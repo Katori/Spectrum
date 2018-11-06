@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Spectrum
 {
-	class MasterServerNetMan2 : NetMan2
+	class MasterServerLens : LensBehaviour
 	{
 		private void Start()
 		{

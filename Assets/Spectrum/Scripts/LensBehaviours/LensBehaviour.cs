@@ -5,7 +5,11 @@ using Mirror;
 
 namespace Spectrum
 {
-	public class NetMan2 : MonoBehaviour
+	/// <summary>
+	/// Lens is a lightweight alternative to NetworkManager, designed primarily for Client connections between the GameServer or GameClient and Master Server,
+	/// but extensible and also offering a lightweight server component. Lens and NetworkManager can be used simultaneously--that's the whole point.
+	/// </summary>
+	public class LensBehaviour : MonoBehaviour
 	{
 		public string NetworkAddress;
 		public int Port;
