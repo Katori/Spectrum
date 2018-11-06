@@ -10,6 +10,7 @@ namespace Spectrum
 
 		private void Start()
 		{
+			Spectrum.LogLevel = Spectrum.SpectrumLogLevel.Information;
 			StartClient();
 		}
 
