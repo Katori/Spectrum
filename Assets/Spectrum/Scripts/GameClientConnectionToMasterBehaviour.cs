@@ -1,7 +1,4 @@
-﻿using System.IO;
-using System.Text;
-using UnityEngine;
-using Mirror;
+﻿using Mirror;
 
 namespace Spectrum
 {
@@ -44,6 +41,7 @@ namespace Spectrum
 			var d = c.value.Split(')');
 			var address = d[0];
 			var port = int.Parse(d[1]);
+			MirrorClient.Disconnect();
 			GameNetworkManager.networkAddress = address;
 			GameNetworkManager.networkPort = port;
 			GameNetworkManager.StartClient();

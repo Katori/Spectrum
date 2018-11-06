@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-using Mirror;
+﻿using Mirror;
 
 namespace Spectrum
 {
