@@ -42,6 +42,7 @@ namespace Spectrum
 			public static readonly short IPAndPortOfGameServerForClient = 5011;
 			public static readonly short IncrementPlayerCountOfServer = 5020;
 			public static readonly short DecrementPlayerCountOfServer = 5021;
+			public static readonly short AuthCode = 10000;
 		}
 
 		public enum SpectrumLogLevel

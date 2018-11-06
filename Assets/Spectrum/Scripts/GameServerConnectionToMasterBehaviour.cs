@@ -14,7 +14,7 @@ namespace Spectrum
 			base.OnClientConnectInternal(netMsg);
 			if(AutoStartServer || Spectrum.Args.StartGameServer)
 			{
-				GameNetworkManager.OpenGameServer();
+				//GameNetworkManager.OpenGameServer();
 			}
 		}
 

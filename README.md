@@ -4,7 +4,7 @@ Below is an aspirational target for Spectrum 0.1. Currently Spectrum 0.1 is in d
 
 # Spectrum
 
-## What Is Spectrum
+## Truly Next-Generation Networking with Mirror + Spectrum
 
 Spectrum is a solution for deploying your Mirror games (or, with little modification, your UNET/HLAPI games), and running a truly painless in-house multiplayer solution with no caps, CCUs, or the like. You can run it on your local machine for development all the way up to a VPS for production scale.
 
@@ -58,7 +58,7 @@ Of course, you are free to adjust the specifics of instancing all you like--thes
 
 ## Goodies
 
-Spectrum also provides a First-Person example using Mirror.
+Spectrum also provides a First-Person example using Mirror. Also, Spectrum is provided as a Unity project basis as well as a UnityPackage file, so you can choose which method you prefer--either way you get the source code, with all the benefits of both Unity and an external DLL via ASMDEFs.
 
 ## Roadmap
 
