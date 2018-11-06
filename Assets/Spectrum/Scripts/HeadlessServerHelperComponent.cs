@@ -24,7 +24,7 @@ namespace Spectrum
 			{
 				SetupForHeadless();
 			}
-			if (GameServerConnectionToMasterBehaviour.Instance != null)
+			if (GameServerLens.Instance != null)
 			{
 				SetupForHeadless();
 			}

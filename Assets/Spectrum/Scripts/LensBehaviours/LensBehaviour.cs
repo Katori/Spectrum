@@ -2,6 +2,7 @@
 using UnityEngine;
 using Telepathy;
 using Mirror;
+using UnityEngine.Serialization;
 
 namespace Spectrum
 {
@@ -11,8 +12,10 @@ namespace Spectrum
 	/// </summary>
 	public class LensBehaviour : MonoBehaviour
 	{
-		public string NetworkAddress;
-		public int Port;
+		[FormerlySerializedAs("NetworkAddress")]
+		public string ConnectionAddress;
+		[FormerlySerializedAs("Port")]
+		public int ConnectionPort;
 
 		public bool IsServer;
 
@@ -33,8 +36,8 @@ namespace Spectrum
 		{
 			StartCommon();
 			RegisterClientHandlers();
-			Spectrum.LogInformation("Connecting to Spectrum Master Server: " + NetworkAddress + ":" + Port);
-			client.Connect(NetworkAddress, Port);
+			Spectrum.LogInformation("Connecting to Spectrum Master Server: " + ConnectionAddress + ":" + ConnectionPort);
+			client.Connect(ConnectionAddress, ConnectionPort);
 		}
 
 		public void StopClient()
@@ -47,7 +50,7 @@ namespace Spectrum
 		{
 			StartCommon();
 			RegisterServerHandlers();
-			server.Start(Port);
+			server.Start(ConnectionPort);
 		}
 
 		public virtual void RegisterServerHandlers()
