@@ -6,15 +6,15 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/FPSExampleGame/Scenes/Game.unity
-    guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 1
+    path: Assets/Spectrum/Scenes/NetMan2/NetMan2ServerTest.unity
+    guid: b9e32bd786f9ef245a1750534a5bda10
+  - enabled: 0
     path: Assets/Spectrum/Scenes/NetMan2/NetMan2ClientTest.unity
     guid: 6612a69f483c7234488caac2da07e245
+  - enabled: 1
+    path: Assets/FPSExampleGame/Scenes/Game.unity
+    guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 0
     path: Assets/Spectrum/Scenes/NetMan2/NetMan2MasterTest.unity
     guid: 3d44158c87fc7f643b978e708c265a45
-  - enabled: 0
-    path: Assets/Spectrum/Scenes/NetMan2/NetMan2ServerTest.unity
-    guid: b9e32bd786f9ef245a1750534a5bda10
   m_configObjects: {}

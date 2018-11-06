@@ -71,6 +71,11 @@ namespace Spectrum
 			//Transport.layer = new TelepathyWebsocketsMultiplexTransport();
 		}
 
+		private void Update()
+		{
+			HandleNewMessages();
+		}
+
 		public void HandleNewMessages()
 		{
 			Message msg;

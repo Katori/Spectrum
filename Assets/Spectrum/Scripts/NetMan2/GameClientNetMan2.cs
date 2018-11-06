@@ -1,5 +1,7 @@
-﻿using Mirror;
+﻿using System;
+using Mirror;
 using Telepathy;
+using UnityEngine;
 
 namespace Spectrum
 {
@@ -11,6 +13,9 @@ namespace Spectrum
 		private void Start()
 		{
 			Spectrum.LogLevel = Spectrum.SpectrumLogLevel.Information;
+			Telepathy.Logger.LogMethod = Debug.Log;
+			Telepathy.Logger.LogErrorMethod = Debug.Log;
+			Telepathy.Logger.LogWarningMethod = Debug.Log;
 			StartClient();
 		}
 
@@ -18,6 +23,12 @@ namespace Spectrum
 		{
 			base.RegisterClientHandlers();
 			RegisterHandler(Spectrum.MsgTypes.IPAndPortOfGameServerForClient, ReceivedServerToConnect);
+			RegisterHandler((short)MsgType.SpawnFinished, ReceivedEmptySpawnMessage);
+		}
+
+		private void ReceivedEmptySpawnMessage(NetworkMessage netMsg)
+		{
+			// don't need to do anything here
 		}
 
 		public override void OnConnected()
