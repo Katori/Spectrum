@@ -8,6 +8,8 @@ Below is an aspirational target for Spectrum 0.1. Currently Spectrum 0.1 is in d
 
 Spectrum is a solution for deploying your Mirror games (or, with little modification, your UNET/HLAPI games), and running a truly painless in-house multiplayer solution with no caps, CCUs, or the like. You can run it on your local machine for development all the way up to a VPS for production scale.
 
+The Spectrum repository contains both Spectrum as well as Adept, a lightweight pure-C# Telepathy server loosely based on Mirror that is tailored exclusively towards running your Master Server. Adept is an optional component of Spectrum, and you are able to use Spectrum to run a Unity-based Master Server instead if you desire.
+
 ## What Does Spectrum Require
 
 Let's get this out of the way first. Spectrum has ONLY been tested on Unity 2018.2.14 using IL2CPP and .NET Standard 2.0. It is the author's belief that this target is the best way to develop Unity games in late 2018. In fact, it's only been tested on Windows, but there's no reason why it won't work elsewhere, and further testing on other platforms is coming (and welcome if anyone wants to assist).
@@ -58,13 +60,16 @@ Of course, you are free to adjust the specifics of instancing all you like--thes
 
 ## Goodies
 
-Spectrum also provides a First-Person example using Mirror. Also, Spectrum is provided as a Unity project basis as well as a UnityPackage file, so you can choose which method you prefer--either way you get the source code, with all the benefits of both Unity and an external DLL via ASMDEFs.
+- Adept is a lightweight pure-C# Telepathy-based Master Server loosely based on Mirror that works seamlessly with Spectrum.
+- The Lens component for Mirror provides a lightweight, extensible NetworkManager replacement that can be used alongside NetworkManager in the same scene, designed to allow Mirror to connect to more than one server.
+- Spectrum also provides a First-Person example game using Mirror.
+- Spectrum is provided as a Unity project basis as well as a UnityPackage file, so you can choose which method you prefer--either way you get the source code, with all the benefits of both Unity and an external DLL via ASMDEFs.
 
 ## Roadmap
 
 - Advanced authentication
 - Load balancing
-- Master data transfer (optional client persistent connection to Master Server)
+- Master data transfer:
   - Optional SQLite module for Master Server
   - Optional chat module for Master Server and client
 - Battle-proven WebGL support (WebGL not currently tested)
