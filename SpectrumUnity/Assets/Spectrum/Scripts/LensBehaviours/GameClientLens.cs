@@ -1,7 +1,5 @@
-﻿using System;
+﻿using UnityEngine;
 using Mirror;
-using Telepathy;
-using UnityEngine;
 
 namespace Spectrum
 {

@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Telepathy;
 using Mirror;
-using UnityEngine.Serialization;
-using System;
+
 
 namespace Spectrum
 {
@@ -39,7 +39,7 @@ namespace Spectrum
 
 		int s_ServerHostId = 0;
 
-		static Type s_NetworkConnectionClass = typeof(NetworkConnection);
+		static System.Type s_NetworkConnectionClass = typeof(NetworkConnection);
 
 		public void StartClient()
 		{
@@ -147,8 +147,7 @@ namespace Spectrum
 
 		private void OnDisconnectedInternal(int connectionId)
 		{
-			NetworkConnection conn;
-			if (s_Connections.TryGetValue(connectionId, out conn))
+			if (s_Connections.TryGetValue(connectionId, out NetworkConnection conn))
 			{
 				conn.Disconnect();
 				RemoveConnection(connectionId);
@@ -200,11 +199,11 @@ namespace Spectrum
 			}
 
 			// get ip address from connection
-			string address;
-			Transport.layer.GetConnectionInfo(connectionId, out address);
+			server.GetConnectionInfo(connectionId, out string address);
+			//Transport.layer.GetConnectionInfo(connectionId, out string address);
 
 			// add player info
-			NetworkConnection conn = (NetworkConnection)Activator.CreateInstance(s_NetworkConnectionClass);
+			NetworkConnection conn = (NetworkConnection)System.Activator.CreateInstance(s_NetworkConnectionClass);
 			conn.Initialize(address, s_ServerHostId, connectionId);
 			AddConnection(conn);
 			OnConnected(conn);

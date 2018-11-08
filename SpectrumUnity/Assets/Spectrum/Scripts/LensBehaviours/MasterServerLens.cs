@@ -54,14 +54,17 @@ namespace Spectrum
 		{
 			var c = netMsg.ReadMessage<IntegerMessage>();
 			GameServers.Add(netMsg.conn.connectionId, new ServerInfo { Address = netMsg.conn.address, Port = c.value });
-			for (int i = 0; i < 4; i++)
+			var d = Mathf.Max(4, WaitingClients.Count);
+			for (int i = 0; i < d; i++)
 			{
-				if (WaitingClients.ElementAtOrDefault(i) != 0)
-				{
-					var ServerMessage = new StringMessage(netMsg.conn.address+")"+c.value);
-					ServerSendMsg(WaitingClients[i], (short)Spectrum.MsgTypes.IPAndPortOfGameServerForClient, ServerMessage);
-				}
+				SendConnectionMessage(WaitingClients[i], netMsg.conn.address, c.value);
 			}
+		}
+
+		private void SendConnectionMessage(int ConnectionId, string Address, int Port)
+		{
+			var ServerMessage = new StringMessage(Address + ")" + Port);
+			ServerSendMsg(ConnectionId, (short)Spectrum.MsgTypes.IPAndPortOfGameServerForClient, ServerMessage);
 		}
 
 		private void IncreasePlayerCount(NetworkMessage netMsg)
@@ -71,7 +74,11 @@ namespace Spectrum
 
 		private void DecreasePlayerCount(NetworkMessage netMsg)
 		{
-			GameServers.FirstOrDefault(x => x.Key == netMsg.conn.connectionId).Value.JoinedClients -= 1;
+			var MatchedServer = GameServers.Where(x => x.Key == netMsg.conn.connectionId).ToList();
+			if (MatchedServer.Any())
+			{
+				MatchedServer.FirstOrDefault().Value.JoinedClients -= 1;
+			}
 		}
 
 		private void SendGameServerIPToClient(NetworkMessage netMsg)
@@ -81,8 +88,7 @@ namespace Spectrum
 			if (c.Any())
 			{
 				var p = c[Random.Range(0, c.Count)];
-				ServerMessage.value = p.Value.Address + ")" + p.Value.Port;
-				ServerSendMsg(netMsg.conn.connectionId, (short)Spectrum.MsgTypes.IPAndPortOfGameServerForClient, ServerMessage);
+				SendConnectionMessage(netMsg.conn.connectionId, p.Value.Address, p.Value.Port);
 			}
 			else
 			{
