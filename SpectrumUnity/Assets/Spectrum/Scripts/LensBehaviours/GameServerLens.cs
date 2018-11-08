@@ -31,9 +31,9 @@ namespace Spectrum
 
 		}
 
-		public override void OnConnected()
+		public override void OnConnected(NetworkConnection conn)
 		{
-			base.OnConnected();
+			base.OnConnected(conn);
 			if (AutoStartServer)
 			{
 				GameNetMan.OpenGameServer(AutoStartIP, AutoStartPort);
@@ -47,19 +47,19 @@ namespace Spectrum
 		public void GameServerAvailable()
 		{
 			var c = new IntegerMessage(GameNetMan.networkPort);
-			ClientSendMsg(Spectrum.MsgTypes.AddGameServerToList, c);
+			ClientSendMsg((short)Spectrum.MsgTypes.AddGameServerToList, c);
 		}
 
 		public void ClientConnectedToGameServer()
 		{
 			var c = new EmptyMessage();
-			ClientSendMsg(Spectrum.MsgTypes.IncrementPlayerCountOfServer, c);
+			ClientSendMsg((short)Spectrum.MsgTypes.IncrementPlayerCountOfServer, c);
 		}
 
 		public void ClientDisconnectedFromGameServer()
 		{
 			var c = new EmptyMessage();
-			ClientSendMsg(Spectrum.MsgTypes.DecrementPlayerCountOfServer, c);
+			ClientSendMsg((short)Spectrum.MsgTypes.DecrementPlayerCountOfServer, c);
 		}
 	}
 }

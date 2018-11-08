@@ -12,7 +12,7 @@ namespace Spectrum
 			{
 				networkAddress = Spectrum.Args.MasterIp;
 				networkPort = Spectrum.Args.MasterPort;
-				client.RegisterHandler(Spectrum.MsgTypes.PortOfGameServerToOpen, OpenGameServerOnPort);
+				client.RegisterHandler((short)Spectrum.MsgTypes.PortOfGameServerToOpen, OpenGameServerOnPort);
 				StartClient();
 			}
 		}
@@ -27,7 +27,7 @@ namespace Spectrum
 		{
 			base.OnClientConnect(conn);
 			var b = new EmptyMessage();
-			NetworkClient.allClients[0].Send(Spectrum.MsgTypes.AddSpawnerToList, b);	
+			NetworkClient.allClients[0].Send((short)Spectrum.MsgTypes.AddSpawnerToList, b);	
 		}
 	}
 }

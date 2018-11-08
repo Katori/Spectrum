@@ -32,17 +32,18 @@ namespace Spectrum
 			Debug.LogError("Spectrum Info - " + c.ToShortDateString() + "@" + c.ToShortTimeString() + ": " + Info);
 		}
 
-		public static class MsgTypes
+		public enum MsgTypes : short
 		{
-			public static readonly short AddSpawnerToList = 5000;
-			public static readonly short PortOfGameServerToOpen = 5001;
-			public static readonly short PortOfGameServerThatDisconnected = 5002;
-			public static readonly short AddGameServerToList = 5005;
-			public static readonly short SendGameServerIPToClient = 5010;
-			public static readonly short IPAndPortOfGameServerForClient = 5011;
-			public static readonly short IncrementPlayerCountOfServer = 5020;
-			public static readonly short DecrementPlayerCountOfServer = 5021;
-			public static readonly short AuthCode = 10000;
+			AddSpawnerToList = 5000,
+			 PortOfGameServerToOpen = 5001,
+		PortOfGameServerThatDisconnected = 5002,
+			AddGameServerToList = 5005,
+			 SendGameServerIPToClient = 5010,
+			 IPAndPortOfGameServerForClient = 5011,
+			 ClientWaitForSpawnedServer = 5012,
+			IncrementPlayerCountOfServer = 5020,
+			DecrementPlayerCountOfServer = 5021,
+			AuthCode = 10000
 		}
 
 		public enum SpectrumLogLevel

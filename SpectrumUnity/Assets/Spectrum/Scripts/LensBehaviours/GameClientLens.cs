@@ -22,7 +22,7 @@ namespace Spectrum
 		public override void RegisterClientHandlers()
 		{
 			base.RegisterClientHandlers();
-			RegisterHandler(Spectrum.MsgTypes.IPAndPortOfGameServerForClient, ReceivedServerToConnect);
+			RegisterHandler((short)Spectrum.MsgTypes.IPAndPortOfGameServerForClient, ReceivedServerToConnect);
 			RegisterHandler((short)MsgType.SpawnFinished, ReceivedEmptySpawnMessage);
 		}
 
@@ -31,11 +31,11 @@ namespace Spectrum
 			// don't need to do anything here
 		}
 
-		public override void OnConnected()
+		public override void OnConnected(NetworkConnection conn)
 		{
-			base.OnConnected();
+			base.OnConnected(conn);
 			Spectrum.LogInformation("Connected to master received by GameClientLens");
-			ClientSendMsg(Spectrum.MsgTypes.SendGameServerIPToClient, new EmptyMessage());
+			ClientSendMsg((short)Spectrum.MsgTypes.SendGameServerIPToClient, new EmptyMessage());
 		}
 
 		private void ReceivedServerToConnect(NetworkMessage netMsg)

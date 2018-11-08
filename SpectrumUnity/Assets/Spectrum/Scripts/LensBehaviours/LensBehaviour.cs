@@ -3,6 +3,7 @@ using UnityEngine;
 using Telepathy;
 using Mirror;
 using UnityEngine.Serialization;
+using System;
 
 namespace Spectrum
 {
@@ -26,11 +27,19 @@ namespace Spectrum
 
 		Dictionary<short, NetworkMessageDelegate> m_MessageHandlers;
 
+		static Dictionary<short, NetworkMessageDelegate> s_MessageHandlers = new Dictionary<short, NetworkMessageDelegate>();
+
 		public System.Action<Message> Connected { get; internal set; }
 		public System.Action<Message> Disconnected { get; internal set; }
 
 		public delegate void OnConnect(string msg);
 		public delegate void OnDisconnect(string msg);
+
+		Dictionary<int, NetworkConnection> s_Connections = new Dictionary<int, NetworkConnection>();
+
+		int s_ServerHostId = 0;
+
+		static Type s_NetworkConnectionClass = typeof(NetworkConnection);
 
 		public void StartClient()
 		{
@@ -94,13 +103,14 @@ namespace Spectrum
 					{
 						case Telepathy.EventType.Connected:
 							Connected(msg);
-							OnConnected();
+							HandleConnect(msg.connectionId, 0);
 							break;
 						case Telepathy.EventType.Data:
 							HandleBytes(msg.data);
 							break;
 						case Telepathy.EventType.Disconnected:
 							Disconnected(msg);
+							OnDisconnectedInternal(msg.connectionId);
 							break;
 						default:
 							break;
@@ -119,8 +129,8 @@ namespace Spectrum
 					{
 						case Telepathy.EventType.Connected:
 							Spectrum.LogInformation("Connected to Spectrum Master Server");
-							ClientSendMsg(Spectrum.MsgTypes.AuthCode, new SpectrumAuthCode() { AuthCode = AuthCode });
-							OnConnected();
+							ClientSendMsg((short)Spectrum.MsgTypes.AuthCode, new SpectrumAuthCode() { AuthCode = AuthCode });
+							HandleConnect(msg.connectionId, 0);
 							break;
 						case Telepathy.EventType.Data:
 							//Debug.Log("Data: " + BitConverter.ToString(msg.data));
@@ -135,9 +145,69 @@ namespace Spectrum
 			
 		}
 
-		public virtual void OnConnected()
+		private void OnDisconnectedInternal(int connectionId)
+		{
+			NetworkConnection conn;
+			if (s_Connections.TryGetValue(connectionId, out conn))
+			{
+				conn.Disconnect();
+				RemoveConnection(connectionId);
+				if (LogFilter.Debug) { Debug.Log("Server lost client:" + connectionId); }
+
+				OnDisconnected(conn);
+			}
+		}
+
+		private bool RemoveConnection(int connectionId)
+		{
+			return s_Connections.Remove(connectionId);
+		}
+
+		public virtual void OnDisconnected(NetworkConnection conn)
+		{
+			conn.Dispose();
+		}
+
+		public virtual void OnConnected(NetworkConnection conn)
 		{
 
+		}
+
+		private bool AddConnection(NetworkConnection conn)
+		{
+			if (!s_Connections.ContainsKey(conn.connectionId))
+			{
+				// connection cannot be null here or conn.connectionId
+				// would throw NRE
+				s_Connections[conn.connectionId] = conn;
+				return true;
+			}
+			// already a connection with this id
+			return false;
+		}
+
+
+
+
+		private void HandleConnect(int connectionId, byte error)
+		{
+			if (LogFilter.Debug) { Debug.Log("Server accepted client:" + connectionId); }
+
+			if (error != 0)
+			{
+				Debug.Log("error: " + error);
+				return;
+			}
+
+			// get ip address from connection
+			string address;
+			Transport.layer.GetConnectionInfo(connectionId, out address);
+
+			// add player info
+			NetworkConnection conn = (NetworkConnection)Activator.CreateInstance(s_NetworkConnectionClass);
+			conn.Initialize(address, s_ServerHostId, connectionId);
+			AddConnection(conn);
+			OnConnected(conn);
 		}
 
 		public bool ServerSendMsg(int connectionId, short msgType, MessageBase msg)
