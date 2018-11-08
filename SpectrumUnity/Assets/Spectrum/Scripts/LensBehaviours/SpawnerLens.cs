@@ -9,6 +9,7 @@ namespace Spectrum
 
 		private void Start()
 		{
+			Spectrum.LogLevel = Spectrum.SpectrumLogLevel.Information;
 			if(Spectrum.Args.StartSpawner)
 			{
 				ConnectionAddress = Spectrum.Args.MasterIp;

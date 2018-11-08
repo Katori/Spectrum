@@ -1,12 +1,12 @@
 # Notice: What is Spectrum Today?
 
-Below is an aspirational target for Spectrum 0.1. Currently Spectrum 0.1 is in development. Look (and use) at your own risk.
+Below is an aspirational target for Spectrum 0.5. Currently Spectrum 0.5 is in development. Look (and use) at your own risk.
 
 # Spectrum
 
 ## Truly Next-Generation Networking with Mirror + Spectrum
 
-Spectrum is a solution for deploying your Mirror games (or, with little modification, your UNET/HLAPI games), and running a truly painless in-house multiplayer solution with no caps, CCUs, or the like. You can run it on your local machine for development all the way up to a VPS for production scale.
+Spectrum is a solution for deploying your Mirror games (or, with little modification, your UNET/HLAPI games), and running a truly painless in-house multiplayer solution with no caps, CCUs, or the like. You can run it on your local machine for development all the way up to a series of VPS for production scale.
 
 The Spectrum repository contains both Spectrum as well as Adept, a lightweight pure-C# Telepathy server loosely based on Mirror that is tailored exclusively towards running your Master Server. Adept is an optional component of Spectrum, and you are able to use Spectrum to run a Unity-based Master Server instead if you desire.
 
@@ -16,7 +16,7 @@ Let's get this out of the way first. Spectrum has ONLY been tested on Unity 2018
 
 ## How Does Spectrum Work
 
-Inspired by Master Server Framework but massively simplified and done "the Mirror way", Spectrum uses a Master-Spawner-Server-Client architecture.
+Spectrum uses a Master-Spawner-Server-Client architecture:
 
 ### Master Server
 

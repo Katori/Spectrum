@@ -17,6 +17,8 @@ namespace Spectrum
 
 		public static readonly string SpectrumConnectionInfoFileName = "SpectrumConnectionInfo.json";
 
+		public static readonly string AuthCode = "CHANGEMEPLEASE";
+
 
 		static Spectrum()
 		{

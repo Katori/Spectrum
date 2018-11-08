@@ -42,6 +42,16 @@ namespace Spectrum
 			RegisterHandler((short)Spectrum.MsgTypes.AddGameServerToList, OnGameServerReady);
 			RegisterHandler((short)Spectrum.MsgTypes.IncrementPlayerCountOfServer, IncreasePlayerCount);
 			RegisterHandler((short)Spectrum.MsgTypes.DecrementPlayerCountOfServer, DecreasePlayerCount);
+			RegisterHandler((short)Spectrum.MsgTypes.AuthCode, ReceivedAuthCode);
+		}
+
+		private void ReceivedAuthCode(NetworkMessage netMsg)
+		{
+			var c = netMsg.ReadMessage<StringMessage>();
+			if (c.value != Spectrum.AuthCode)
+			{
+				netMsg.conn.Disconnect();
+			}
 		}
 
 		private void OnSpawnerReady(NetworkMessage netMsg)

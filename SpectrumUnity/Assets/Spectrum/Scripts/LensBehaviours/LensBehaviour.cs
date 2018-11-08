@@ -20,8 +20,6 @@ namespace Spectrum
 
 		public bool IsServer;
 
-		public static readonly string AuthCode = "CHANGEMEPLEASE";
-
 		Server server = new Server();
 		Client client = new Client();
 
@@ -129,7 +127,7 @@ namespace Spectrum
 					{
 						case Telepathy.EventType.Connected:
 							Spectrum.LogInformation("Connected to Spectrum Master Server");
-							ClientSendMsg((short)Spectrum.MsgTypes.AuthCode, new SpectrumAuthCode() { AuthCode = AuthCode });
+							ClientSendMsg((short)Spectrum.MsgTypes.AuthCode, new SpectrumAuthCode() { AuthCode = Spectrum.AuthCode });
 							HandleConnect(msg.connectionId, 0);
 							break;
 						case Telepathy.EventType.Data:
