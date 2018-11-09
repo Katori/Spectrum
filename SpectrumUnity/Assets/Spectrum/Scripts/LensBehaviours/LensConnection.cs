@@ -70,7 +70,10 @@ namespace Spectrum.Lens
 			}
 		}
 
-
+		internal void SetHandlers(Dictionary<short, LensMessageDelegate> serverMessageHandlers)
+		{
+			ClientMessageHandlers = serverMessageHandlers;
+		}
 	}
 
 	public class LensMessage

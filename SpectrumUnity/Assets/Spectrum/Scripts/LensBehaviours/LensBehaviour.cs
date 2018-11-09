@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using Telepathy;
 using Mirror;
-using System;
 
 namespace Spectrum.Lens
 {
@@ -32,14 +31,15 @@ namespace Spectrum.Lens
 		static System.Type s_NetworkConnectionClass = typeof(LensConnection);
 
 		private LensConnection ClientConnection;
+		private LensConnection ServerConnection;
 
 		public void StartClient()
 		{
 			StartCommon();
-			RegisterClientHandlers();
 			Spectrum.LogInformation("Connecting to Spectrum Master Server: " + ConnectionAddress + ":" + ConnectionPort);
 			ClientConnection = new LensConnection();
 			ClientConnection.Initialize(ConnectionAddress, 0, 0);
+			RegisterClientHandlers();
 			client.Connect(ConnectionAddress, ConnectionPort);
 		}
 
@@ -183,6 +183,7 @@ namespace Spectrum.Lens
 				// connection cannot be null here or conn.connectionId
 				// would throw NRE
 				s_Connections[conn.connectionId] = conn;
+				conn.SetHandlers(ServerMessageHandlers);
 				return true;
 			}
 			// already a connection with this id
