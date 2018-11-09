@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Mirror;
+using System.Collections.Generic;
 using UnityEngine;
-using Mirror;
 
 namespace Spectrum.Lens
 {
@@ -8,7 +8,7 @@ namespace Spectrum.Lens
 	public class LensConnection
 	{
 
-		Dictionary<short, LensMessageDelegate> m_MessageHandlers;
+		public Dictionary<short, LensMessageDelegate> ClientMessageHandlers;
 
 		public int hostId = -1;
 		public int connectionId = -1;
@@ -24,6 +24,7 @@ namespace Spectrum.Lens
 			address = networkAddress;
 			hostId = networkHostId;
 			connectionId = networkConnectionId;
+			ClientMessageHandlers = new Dictionary<short, LensMessageDelegate>();
 		}
 
 		public void Disconnect()
@@ -46,7 +47,7 @@ namespace Spectrum.Lens
 				if (logNetworkMessages) { Spectrum.LogInformation("ConnectionRecv con:" + connectionId + " msgType:" + msgType + " content:" + System.BitConverter.ToString(content)); }
 
 				LensMessageDelegate msgDelegate;
-				if (m_MessageHandlers.TryGetValue((short)msgType, out msgDelegate))
+				if (ClientMessageHandlers.TryGetValue((short)msgType, out msgDelegate))
 				{
 					// create message here instead of caching it. so we can add it to queue more easily.
 					LensMessage msg = new LensMessage();

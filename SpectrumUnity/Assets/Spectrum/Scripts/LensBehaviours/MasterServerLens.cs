@@ -37,12 +37,12 @@ namespace Spectrum.Lens
 		public override void RegisterServerHandlers()
 		{
 			base.RegisterServerHandlers();
-			RegisterHandler((short)Spectrum.MsgTypes.SendGameServerIPToClient, SendGameServerIPToClient);
-			RegisterHandler((short)Spectrum.MsgTypes.AddSpawnerToList, OnSpawnerReady);
-			RegisterHandler((short)Spectrum.MsgTypes.AddGameServerToList, OnGameServerReady);
-			RegisterHandler((short)Spectrum.MsgTypes.IncrementPlayerCountOfServer, IncreasePlayerCount);
-			RegisterHandler((short)Spectrum.MsgTypes.DecrementPlayerCountOfServer, DecreasePlayerCount);
-			RegisterHandler((short)Spectrum.MsgTypes.AuthCode, ReceivedAuthCode);
+			RegisterServerHandler((short)Spectrum.MsgTypes.SendGameServerIPToClient, SendGameServerIPToClient);
+			RegisterServerHandler((short)Spectrum.MsgTypes.AddSpawnerToList, OnSpawnerReady);
+			RegisterServerHandler((short)Spectrum.MsgTypes.AddGameServerToList, OnGameServerReady);
+			RegisterServerHandler((short)Spectrum.MsgTypes.IncrementPlayerCountOfServer, IncreasePlayerCount);
+			RegisterServerHandler((short)Spectrum.MsgTypes.DecrementPlayerCountOfServer, DecreasePlayerCount);
+			RegisterServerHandler((short)Spectrum.MsgTypes.AuthCode, ReceivedAuthCode);
 		}
 
 		private void ReceivedAuthCode(LensMessage netMsg)

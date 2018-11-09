@@ -32,7 +32,7 @@ namespace Spectrum.Lens
 		public override void RegisterClientHandlers()
 		{
 			base.RegisterClientHandlers();
-			RegisterHandler((short)Spectrum.MsgTypes.PortOfGameServerToOpen, StartNewServer);
+			RegisterClientHandler((short)Spectrum.MsgTypes.PortOfGameServerToOpen, StartNewServer);
 		}
 
 		private void StartNewServer(LensMessage netMsg)

@@ -20,8 +20,8 @@ namespace Spectrum.Lens
 		public override void RegisterClientHandlers()
 		{
 			base.RegisterClientHandlers();
-			RegisterHandler((short)Spectrum.MsgTypes.IPAndPortOfGameServerForClient, ReceivedServerToConnect);
-			RegisterHandler((short)MsgType.SpawnFinished, ReceivedEmptySpawnMessage);
+			RegisterClientHandler((short)Spectrum.MsgTypes.IPAndPortOfGameServerForClient, ReceivedServerToConnect);
+			RegisterClientHandler((short)MsgType.SpawnFinished, ReceivedEmptySpawnMessage);
 		}
 
 		private void ReceivedEmptySpawnMessage(LensMessage netMsg)

@@ -23,7 +23,7 @@ namespace Spectrum.Lens
 		Server server = new Server();
 		Client client = new Client();
 
-		Dictionary<short, LensMessageDelegate> m_MessageHandlers;
+		public Dictionary<short, LensMessageDelegate> ServerMessageHandlers;
 
 		Dictionary<int, LensConnection> s_Connections = new Dictionary<int, LensConnection>();
 
@@ -52,6 +52,7 @@ namespace Spectrum.Lens
 		public void StartServer()
 		{
 			StartCommon();
+			ServerMessageHandlers = new Dictionary<short, LensMessageDelegate>();
 			RegisterServerHandlers();
 			server.Start(ConnectionPort);
 		}
@@ -77,7 +78,6 @@ namespace Spectrum.Lens
 			Telepathy.Logger.LogMethod = Debug.Log;
 			Telepathy.Logger.LogWarningMethod = Debug.LogWarning;
 			Telepathy.Logger.LogErrorMethod = Debug.LogError;
-			m_MessageHandlers = new Dictionary<short, LensMessageDelegate>();
 			//Transport.layer = new TelepathyWebsocketsMultiplexTransport();
 		}
 
@@ -258,14 +258,23 @@ namespace Spectrum.Lens
 			}
 		}
 
-		public void RegisterHandler(short msgType, LensMessageDelegate handler)
+		public void RegisterServerHandler(short msgType, LensMessageDelegate handler)
 		{
-			if (m_MessageHandlers.ContainsKey(msgType))
+			if (ServerMessageHandlers.ContainsKey(msgType))
 			{
 				//if (LogFilter.Debug) { Debug.Log("NetworkConnection.RegisterHandler replacing " + msgType); }
 				Debug.Log("NetworkConnection.RegisterHandler replacing " + msgType);
 			}
-			m_MessageHandlers[msgType] = handler;
+			ServerMessageHandlers[msgType] = handler;
+		}
+
+		public void RegisterClientHandler(short msgType, LensMessageDelegate handler)
+		{
+			if (ClientConnection.ClientMessageHandlers.ContainsKey(msgType))
+			{
+				Spectrum.LogInformation("Replacing client handler: " + msgType);
+			}
+			ClientConnection.ClientMessageHandlers[msgType] = handler;
 		}
 
 		public string GetConnectionInfo(int connectionId)
