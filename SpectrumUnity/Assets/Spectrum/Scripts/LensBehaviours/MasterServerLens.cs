@@ -56,7 +56,9 @@ namespace Spectrum.Lens
 
 		private void OnSpawnerReady(LensMessage netMsg)
 		{
+			Spectrum.LogInformation("Spawner connected");
 			var c = netMsg.ReadMessage<IntegerMessage>();
+			Spectrum.LogInformation(netMsg.conn.connectionId.ToString());
 			Spawners.Add(netMsg.conn.connectionId, new ServerInfo { Address = netMsg.conn.address, Port = c.value });
 		}
 

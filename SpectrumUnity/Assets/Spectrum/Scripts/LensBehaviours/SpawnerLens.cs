@@ -22,9 +22,9 @@ namespace Spectrum.Lens
 			}
 		}
 
-		public override void OnConnected(LensConnection conn)
+		public override void OnClientConnected()
 		{
-			base.OnConnected(conn);
+			base.OnClientConnected();
 			var c = new IntegerMessage(0);
 			ClientSendMsg((short)Spectrum.MsgTypes.AddSpawnerToList, c);
 		}

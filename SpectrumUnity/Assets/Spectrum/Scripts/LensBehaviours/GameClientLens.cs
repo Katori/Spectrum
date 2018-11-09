@@ -29,9 +29,9 @@ namespace Spectrum.Lens
 			// don't need to do anything here
 		}
 
-		public override void OnConnected(LensConnection conn)
+		public override void OnClientConnected()
 		{
-			base.OnConnected(conn);
+			base.OnClientConnected();
 			Spectrum.LogInformation("Connected to master received by GameClientLens");
 			ClientSendMsg((short)Spectrum.MsgTypes.SendGameServerIPToClient, new EmptyMessage());
 		}

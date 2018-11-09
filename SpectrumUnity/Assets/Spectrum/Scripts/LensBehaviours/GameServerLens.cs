@@ -31,9 +31,9 @@ namespace Spectrum.Lens
 
 		}
 
-		public override void OnConnected(LensConnection conn)
+		public override void OnClientConnected()
 		{
-			base.OnConnected(conn);
+			base.OnClientConnected();
 			if (AutoStartServer)
 			{
 				GameNetMan.OpenGameServer(AutoStartIP, AutoStartPort);

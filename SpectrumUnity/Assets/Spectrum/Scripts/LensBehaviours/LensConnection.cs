@@ -36,7 +36,40 @@ namespace Spectrum.Lens
 			return string.Format("hostId: {0} connectionId: {1} isReady: {2}", hostId, connectionId, isReady);
 		}
 
-		
+		public void HandleBytes(byte[] buffer)
+		{
+			// unpack message
+			ushort msgType;
+			byte[] content;
+			if (Protocol.UnpackMessage(buffer, out msgType, out content))
+			{
+				if (logNetworkMessages) { Spectrum.LogInformation("ConnectionRecv con:" + connectionId + " msgType:" + msgType + " content:" + System.BitConverter.ToString(content)); }
+
+				LensMessageDelegate msgDelegate;
+				if (m_MessageHandlers.TryGetValue((short)msgType, out msgDelegate))
+				{
+					// create message here instead of caching it. so we can add it to queue more easily.
+					LensMessage msg = new LensMessage();
+					msg.msgType = (short)msgType;
+					msg.reader = new NetworkReader(content);
+					msg.conn = this;
+
+					msgDelegate(msg);
+					lastMessageTime = Time.time;
+				}
+				else
+				{
+					//NOTE: this throws away the rest of the buffer. Need moar error codes
+					Spectrum.LogError("Unknown message ID " + msgType + " connId:" + connectionId);
+				}
+			}
+			else
+			{
+				Spectrum.LogError("HandleBytes UnpackMessage failed for: " + System.BitConverter.ToString(buffer));
+			}
+		}
+
+
 	}
 
 	public class LensMessage

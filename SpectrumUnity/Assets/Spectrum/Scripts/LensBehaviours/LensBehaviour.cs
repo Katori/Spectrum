@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using Telepathy;
 using Mirror;
-
+using System;
 
 namespace Spectrum.Lens
 {
@@ -31,11 +31,15 @@ namespace Spectrum.Lens
 
 		static System.Type s_NetworkConnectionClass = typeof(LensConnection);
 
+		private LensConnection ClientConnection;
+
 		public void StartClient()
 		{
 			StartCommon();
 			RegisterClientHandlers();
 			Spectrum.LogInformation("Connecting to Spectrum Master Server: " + ConnectionAddress + ":" + ConnectionPort);
+			ClientConnection = new LensConnection();
+			ClientConnection.Initialize(ConnectionAddress, 0, 0);
 			client.Connect(ConnectionAddress, ConnectionPort);
 		}
 
@@ -95,7 +99,14 @@ namespace Spectrum.Lens
 							HandleConnect(msg.connectionId, 0);
 							break;
 						case Telepathy.EventType.Data:
-							HandleBytes(msg.data);
+							if (s_Connections.TryGetValue(msg.connectionId, out LensConnection conn))
+							{
+								conn.HandleBytes(msg.data);
+							}
+							else
+							{
+								Spectrum.LogError("HandleData Unknown connectionId:" + msg.connectionId);
+							}
 							break;
 						case Telepathy.EventType.Disconnected:
 							OnDisconnectedInternal(msg.connectionId);
@@ -118,11 +129,11 @@ namespace Spectrum.Lens
 						case Telepathy.EventType.Connected:
 							Spectrum.LogInformation("Connected to Spectrum Master Server");
 							ClientSendMsg((short)Spectrum.MsgTypes.AuthCode, new SpectrumAuthCode() { AuthCode = Spectrum.AuthCode });
-							HandleConnect(msg.connectionId, 0);
+							OnClientConnected();
 							break;
 						case Telepathy.EventType.Data:
 							//Debug.Log("Data: " + BitConverter.ToString(msg.data));
-							HandleBytes(msg.data);
+							ClientConnection.HandleBytes(msg.data);
 							break;
 						case Telepathy.EventType.Disconnected:
 							OnDisconnectedInternal(msg.connectionId);
@@ -130,6 +141,11 @@ namespace Spectrum.Lens
 					}
 				}
 			}
+			
+		}
+
+		public virtual void OnClientConnected()
+		{
 			
 		}
 
@@ -239,44 +255,6 @@ namespace Spectrum.Lens
 			else
 			{
 				return client.Send(bytes);
-			}
-		}
-
-		// handle this message
-		// note: original HLAPI HandleBytes function handled >1 message in a while loop, but this wasn't necessary
-		//       anymore because NetworkServer/NetworkClient.Update both use while loops to handle >1 data events per
-		//       frame already.
-		//       -> in other words, we always receive 1 message per Receive call, never two.
-		//       -> can be tested easily with a 1000ms send delay and then logging amount received in while loops here
-		//          and in NetworkServer/Client Update. HandleBytes already takes exactly one.
-		protected void HandleBytes(byte[] buffer)
-		{
-			// unpack message
-			if (Protocol.UnpackMessage(buffer, out ushort msgType, out byte[] content))
-			{
-
-				if (m_MessageHandlers.TryGetValue((short)msgType, out LensMessageDelegate msgDelegate))
-				{
-					// create message here instead of caching it. so we can add it to queue more easily.
-					LensMessage msg = new LensMessage
-					{
-						msgType = (short)msgType,
-						reader = new NetworkReader(content)
-					};
-					//msg.conn = this;
-
-					msgDelegate(msg);
-					//lastMessageTime = Time.time;
-				}
-				else
-				{
-					//NOTE: this throws away the rest of the buffer. Need moar error codes
-					Debug.LogError("Unknown message ID " + msgType);// + " connId:" + connectionId);
-				}
-			}
-			else
-			{
-				Debug.LogError("HandleBytes UnpackMessage failed for: " + System.BitConverter.ToString(buffer));
 			}
 		}
 
