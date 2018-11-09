@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using Mirror;
 
-namespace Spectrum
+namespace Spectrum.Lens
 {
 	public class SpawnerLens : LensBehaviour
 	{
@@ -22,13 +22,20 @@ namespace Spectrum
 			}
 		}
 
+		public override void OnConnected(LensConnection conn)
+		{
+			base.OnConnected(conn);
+			var c = new IntegerMessage(0);
+			ClientSendMsg((short)Spectrum.MsgTypes.AddSpawnerToList, c);
+		}
+
 		public override void RegisterClientHandlers()
 		{
 			base.RegisterClientHandlers();
 			RegisterHandler((short)Spectrum.MsgTypes.PortOfGameServerToOpen, StartNewServer);
 		}
 
-		private void StartNewServer(NetworkMessage netMsg)
+		private void StartNewServer(LensMessage netMsg)
 		{
 			Spectrum.LogInformation("Starting new game server");
 			var d = new ProcessStartInfo(System.Environment.CurrentDirectory+"StartGameServer.bat")

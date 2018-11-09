@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 using Mirror;
 
-namespace Spectrum
+namespace Spectrum.Lens
 {
 	class MasterServerLens : LensBehaviour
 	{
@@ -45,7 +45,7 @@ namespace Spectrum
 			RegisterHandler((short)Spectrum.MsgTypes.AuthCode, ReceivedAuthCode);
 		}
 
-		private void ReceivedAuthCode(NetworkMessage netMsg)
+		private void ReceivedAuthCode(LensMessage netMsg)
 		{
 			var c = netMsg.ReadMessage<StringMessage>();
 			if (c.value != Spectrum.AuthCode)
@@ -54,13 +54,13 @@ namespace Spectrum
 			}
 		}
 
-		private void OnSpawnerReady(NetworkMessage netMsg)
+		private void OnSpawnerReady(LensMessage netMsg)
 		{
 			var c = netMsg.ReadMessage<IntegerMessage>();
 			Spawners.Add(netMsg.conn.connectionId, new ServerInfo { Address = netMsg.conn.address, Port = c.value });
 		}
 
-		private void OnGameServerReady(NetworkMessage netMsg)
+		private void OnGameServerReady(LensMessage netMsg)
 		{
 			var c = netMsg.ReadMessage<IntegerMessage>();
 			GameServers.Add(netMsg.conn.connectionId, new ServerInfo { Address = netMsg.conn.address, Port = c.value });
@@ -77,12 +77,12 @@ namespace Spectrum
 			ServerSendMsg(ConnectionId, (short)Spectrum.MsgTypes.IPAndPortOfGameServerForClient, ServerMessage);
 		}
 
-		private void IncreasePlayerCount(NetworkMessage netMsg)
+		private void IncreasePlayerCount(LensMessage netMsg)
 		{
 			GameServers.FirstOrDefault(x => x.Key == netMsg.conn.connectionId).Value.JoinedClients += 1;
 		}
 
-		private void DecreasePlayerCount(NetworkMessage netMsg)
+		private void DecreasePlayerCount(LensMessage netMsg)
 		{
 			var MatchedServer = GameServers.Where(x => x.Key == netMsg.conn.connectionId).ToList();
 			if (MatchedServer.Any())
@@ -91,7 +91,7 @@ namespace Spectrum
 			}
 		}
 
-		private void SendGameServerIPToClient(NetworkMessage netMsg)
+		private void SendGameServerIPToClient(LensMessage netMsg)
 		{
 			var c = GameServers.Where(x => x.Value.JoinedClients < x.Value.ClientCapacity).ToList();
 			var ServerMessage = new StringMessage();
@@ -110,7 +110,7 @@ namespace Spectrum
 			}
 		}
 
-		public override void OnDisconnected(NetworkConnection conn)
+		public override void OnDisconnected(LensConnection conn)
 		{
 			base.OnDisconnected(conn);
 			if (Spawners.ContainsKey(conn.connectionId))

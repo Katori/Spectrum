@@ -1,7 +1,7 @@
 ﻿using Mirror;
 using UnityEngine;
 
-namespace Spectrum
+namespace Spectrum.Lens
 {
 	public class GameServerLens : LensBehaviour
 	{
@@ -31,7 +31,7 @@ namespace Spectrum
 
 		}
 
-		public override void OnConnected(NetworkConnection conn)
+		public override void OnConnected(LensConnection conn)
 		{
 			base.OnConnected(conn);
 			if (AutoStartServer)

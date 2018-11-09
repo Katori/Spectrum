@@ -5,7 +5,7 @@ using Telepathy;
 using Mirror;
 
 
-namespace Spectrum
+namespace Spectrum.Lens
 {
 	/// <summary>
 	/// Lens is a lightweight alternative to NetworkManager, designed primarily for Client connections between the GameServer or GameClient and Master Server,
@@ -23,21 +23,13 @@ namespace Spectrum
 		Server server = new Server();
 		Client client = new Client();
 
-		Dictionary<short, NetworkMessageDelegate> m_MessageHandlers;
+		Dictionary<short, LensMessageDelegate> m_MessageHandlers;
 
-		static Dictionary<short, NetworkMessageDelegate> s_MessageHandlers = new Dictionary<short, NetworkMessageDelegate>();
-
-		public System.Action<Message> Connected { get; internal set; }
-		public System.Action<Message> Disconnected { get; internal set; }
-
-		public delegate void OnConnect(string msg);
-		public delegate void OnDisconnect(string msg);
-
-		Dictionary<int, NetworkConnection> s_Connections = new Dictionary<int, NetworkConnection>();
+		Dictionary<int, LensConnection> s_Connections = new Dictionary<int, LensConnection>();
 
 		int s_ServerHostId = 0;
 
-		static System.Type s_NetworkConnectionClass = typeof(NetworkConnection);
+		static System.Type s_NetworkConnectionClass = typeof(LensConnection);
 
 		public void StartClient()
 		{
@@ -81,7 +73,7 @@ namespace Spectrum
 			Telepathy.Logger.LogMethod = Debug.Log;
 			Telepathy.Logger.LogWarningMethod = Debug.LogWarning;
 			Telepathy.Logger.LogErrorMethod = Debug.LogError;
-			m_MessageHandlers = new Dictionary<short, NetworkMessageDelegate>();
+			m_MessageHandlers = new Dictionary<short, LensMessageDelegate>();
 			//Transport.layer = new TelepathyWebsocketsMultiplexTransport();
 		}
 
@@ -100,14 +92,12 @@ namespace Spectrum
 					switch (msg.eventType)
 					{
 						case Telepathy.EventType.Connected:
-							Connected(msg);
 							HandleConnect(msg.connectionId, 0);
 							break;
 						case Telepathy.EventType.Data:
 							HandleBytes(msg.data);
 							break;
 						case Telepathy.EventType.Disconnected:
-							Disconnected(msg);
 							OnDisconnectedInternal(msg.connectionId);
 							break;
 						default:
@@ -135,7 +125,7 @@ namespace Spectrum
 							HandleBytes(msg.data);
 							break;
 						case Telepathy.EventType.Disconnected:
-							Debug.Log("Disconnected");
+							OnDisconnectedInternal(msg.connectionId);
 							break;
 					}
 				}
@@ -145,11 +135,11 @@ namespace Spectrum
 
 		private void OnDisconnectedInternal(int connectionId)
 		{
-			if (s_Connections.TryGetValue(connectionId, out NetworkConnection conn))
+			if (s_Connections.TryGetValue(connectionId, out LensConnection conn))
 			{
 				conn.Disconnect();
 				RemoveConnection(connectionId);
-				if (LogFilter.Debug) { Debug.Log("Server lost client:" + connectionId); }
+				Spectrum.LogInformation("Server lost client:" + connectionId);
 
 				OnDisconnected(conn);
 			}
@@ -160,17 +150,17 @@ namespace Spectrum
 			return s_Connections.Remove(connectionId);
 		}
 
-		public virtual void OnDisconnected(NetworkConnection conn)
+		public virtual void OnDisconnected(LensConnection conn)
 		{
-			conn.Dispose();
+			
 		}
 
-		public virtual void OnConnected(NetworkConnection conn)
+		public virtual void OnConnected(LensConnection conn)
 		{
 
 		}
 
-		private bool AddConnection(NetworkConnection conn)
+		private bool AddConnection(LensConnection conn)
 		{
 			if (!s_Connections.ContainsKey(conn.connectionId))
 			{
@@ -183,12 +173,9 @@ namespace Spectrum
 			return false;
 		}
 
-
-
-
 		private void HandleConnect(int connectionId, byte error)
 		{
-			if (LogFilter.Debug) { Debug.Log("Server accepted client:" + connectionId); }
+			Spectrum.LogInformation("Server accepted client:" + connectionId);
 
 			if (error != 0)
 			{
@@ -201,7 +188,7 @@ namespace Spectrum
 			//Transport.layer.GetConnectionInfo(connectionId, out string address);
 
 			// add player info
-			NetworkConnection conn = (NetworkConnection)System.Activator.CreateInstance(s_NetworkConnectionClass);
+			LensConnection conn = (LensConnection)System.Activator.CreateInstance(s_NetworkConnectionClass);
 			conn.Initialize(address, s_ServerHostId, connectionId);
 			AddConnection(conn);
 			OnConnected(conn);
@@ -268,10 +255,10 @@ namespace Spectrum
 			if (Protocol.UnpackMessage(buffer, out ushort msgType, out byte[] content))
 			{
 
-				if (m_MessageHandlers.TryGetValue((short)msgType, out NetworkMessageDelegate msgDelegate))
+				if (m_MessageHandlers.TryGetValue((short)msgType, out LensMessageDelegate msgDelegate))
 				{
 					// create message here instead of caching it. so we can add it to queue more easily.
-					NetworkMessage msg = new NetworkMessage
+					LensMessage msg = new LensMessage
 					{
 						msgType = (short)msgType,
 						reader = new NetworkReader(content)
@@ -293,7 +280,7 @@ namespace Spectrum
 			}
 		}
 
-		public void RegisterHandler(short msgType, NetworkMessageDelegate handler)
+		public void RegisterHandler(short msgType, LensMessageDelegate handler)
 		{
 			if (m_MessageHandlers.ContainsKey(msgType))
 			{

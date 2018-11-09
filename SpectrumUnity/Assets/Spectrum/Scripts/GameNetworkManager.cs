@@ -3,6 +3,7 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Mirror;
+using Spectrum.Lens;
 
 namespace Spectrum
 {

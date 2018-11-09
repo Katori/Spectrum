@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Mirror;
 
-namespace Spectrum
+namespace Spectrum.Lens
 {
 	class GameClientLens : LensBehaviour
 	{
@@ -24,19 +24,19 @@ namespace Spectrum
 			RegisterHandler((short)MsgType.SpawnFinished, ReceivedEmptySpawnMessage);
 		}
 
-		private void ReceivedEmptySpawnMessage(NetworkMessage netMsg)
+		private void ReceivedEmptySpawnMessage(LensMessage netMsg)
 		{
 			// don't need to do anything here
 		}
 
-		public override void OnConnected(NetworkConnection conn)
+		public override void OnConnected(LensConnection conn)
 		{
 			base.OnConnected(conn);
 			Spectrum.LogInformation("Connected to master received by GameClientLens");
 			ClientSendMsg((short)Spectrum.MsgTypes.SendGameServerIPToClient, new EmptyMessage());
 		}
 
-		private void ReceivedServerToConnect(NetworkMessage netMsg)
+		private void ReceivedServerToConnect(LensMessage netMsg)
 		{
 			var c = netMsg.ReadMessage<StringMessage>();
 			Spectrum.LogInformation("Received server info: " + c);

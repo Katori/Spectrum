@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Spectrum.Lens;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Spectrum
