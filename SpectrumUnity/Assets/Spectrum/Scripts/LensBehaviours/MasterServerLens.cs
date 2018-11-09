@@ -11,7 +11,7 @@ namespace Spectrum.Lens
 
 		private Dictionary<int, ServerInfo> GameServers = new Dictionary<int, ServerInfo>();
 
-		private List<int> WaitingClients;
+		private List<int> WaitingClients = new List<int>();
 
 		private readonly int MinGameServerPort = 7779;
 		private readonly int MaxGameServerPort = 7789;
