@@ -1,0 +1,40 @@
+<div class="card">
+  <div class="card-body">
+    <form [formGroup]="angForm" novalidate>
+      <div class="form-group">
+        <label class="col-md-4">Address</label>
+        <input type="text" class="form-control" formControlName="address" #address />
+      </div>
+      <div *ngIf="angForm.controls['address'].invalid && (angForm.controls['address'].dirty || angForm.controls['address'].touched)" class="alert alert-danger">
+        <div *ngIf="angForm.controls['address'].errors.required">
+          Address is required.
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-4">Port</label>
+        <input type="text" class="form-control" formControlName="port" #port />
+      </div>
+      <div *ngIf="angForm.controls['port'].invalid && (angForm.controls['port'].dirty || angForm.controls['port'].touched)" class="alert alert-danger">
+        <div *ngIf="angForm.controls['port'].errors.required">
+          Port is required.
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-4">Played Games</label>
+        <input type="text" class="form-control" formControlName="playedGames" #playedGames />
+      </div>
+      <div *ngIf="angForm.controls['playedGames'].invalid && (angForm.controls['playedGames'].dirty || angForm.controls['playedGames'].touched)" class="alert alert-danger">
+        <div *ngIf="angForm.controls['playedGames'].errors.required">
+          Played Games is required.
+        </div>
+      </div>
+      <div class="form-group">
+        <button (click)="addServer(address.value, port.value, playedGames.value)"
+            [disabled]="angForm.pristine || angForm.invalid"
+            class="btn btn-primary">
+            Add Server
+         </button>
+    </div>
+    </form>
+  </div>
+</div>

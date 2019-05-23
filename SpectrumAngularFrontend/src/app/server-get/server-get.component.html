@@ -1,0 +1,22 @@
+<table class="table table-hover">
+  <thead>
+  <tr>
+      <td>Address</td>
+      <td>Port</td>
+      <td>Players</td>
+      <td>Played Games</td>
+      <td colspan="2">Actions</td>
+  </tr>
+  </thead>
+
+  <tbody>
+      <tr *ngFor="let server of servers">
+          <td>{{ server.address }}</td>
+          <td>{{ server.port }}</td>
+          <td>{{ server.players }}</td>
+          <td>{{ server.playedGames }}</td>
+          <td><a [routerLink]="['edit', server.id]" class="btn btn-primary">Edit</a></td>
+          <td><a (click) = "deleteServer(server.id)" class="btn btn-danger">Delete</a></td>
+      </tr>
+  </tbody>
+</table>
